@@ -29,11 +29,11 @@ This is particularly useful if you've uploaded many images without alt text, or 
 
 ## Frequently Asked Questions 
 
-= Will this overwrite existing alt text? =
+### Will this overwrite existing alt text? 
 
 No, this plugin only updates images that have empty or missing alt text.
 
-= Can I undo the changes? =
+### Can I undo the changes? 
 
 The plugin doesn't have an undo feature, so it's recommended to backup your database before running it.
 
