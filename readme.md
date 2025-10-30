@@ -1,4 +1,4 @@
-# Alt Text from Title Updater
+# Alt Text Updater
 
 Contributors: Chris Banks  
 Tags: media, alt text, accessibility, seo, images  

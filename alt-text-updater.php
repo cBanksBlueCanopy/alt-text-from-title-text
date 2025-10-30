@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Alt Text from Title Updater
+ * Plugin Name: Alt Text Updater
  * Plugin URI: https://github.com/cBanksBlueCanopy/alt-text-from-title-text
  * Description: Updates missing alt text with title text for all media library images
  * Version: 1.0.0
