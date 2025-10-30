@@ -37,7 +37,7 @@ No, this plugin only updates images that have empty or missing alt text.
 
 The plugin doesn't have an undo feature, so it's recommended to backup your database before running it.
 
-= Does this work with all image types? =
+### Does this work with all image types? 
 
 Yes, it works with all image types in your WordPress media library.
 
