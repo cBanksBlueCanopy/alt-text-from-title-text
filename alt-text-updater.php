@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Alt Text from Title Updater
- * Plugin URI: https://example.com/alt-text-updater
+ * Plugin URI: https://example.com/alt-text-from-title-text-main
  * Description: Updates missing alt text with title text for all media library images
  * Version: 1.0.0
  * Author: Your Name
@@ -29,7 +29,7 @@ class Alt_Text_Updater {
             'Alt Text Updater',
             'Alt Text Updater',
             'manage_options',
-            'alt-text-updater',
+            'alt-text-from-title-text-main',
             array($this, 'admin_page')
         );
     }
