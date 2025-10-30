@@ -1,15 +1,16 @@
-=== Alt Text from Title Updater ===
-Contributors: yourname
-Tags: media, alt text, accessibility, seo, images
-Requires at least: 5.0
-Tested up to: 6.4
-Stable tag: 1.0.0
+# Alt Text from Title Updater
+
+Contributors: Chris Banks  
+Tags: media, alt text, accessibility, seo, images  
+Requires at least: WordPress 5.0  
+Tested up to: WordPress 6.4  
+Stable tag: 1.0.0  
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Updates missing alt text with title text for all media library images.
 
-== Description ==
+## Description 
 
 This plugin helps improve your site's accessibility and SEO by automatically updating missing alt text for images in your media library. 
 
@@ -20,13 +21,13 @@ When you run this plugin, it will:
 
 This is particularly useful if you've uploaded many images without alt text, or if you want to quickly improve your site's accessibility.
 
-== Installation ==
+## Installation 
 
-1. Upload the plugin files to the `/wp-content/plugins/alt-text-updater` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Navigate to Media > Alt Text Updater to use the plugin
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions 
 
 = Will this overwrite existing alt text? =
 
@@ -40,7 +41,7 @@ The plugin doesn't have an undo feature, so it's recommended to backup your data
 
 Yes, it works with all image types in your WordPress media library.
 
-== Changelog ==
+## Changelog 
 
-= 1.0.0 =
+### 1.0.0 
 * Initial release
