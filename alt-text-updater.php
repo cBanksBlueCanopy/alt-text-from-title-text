@@ -29,7 +29,7 @@ class Alt_Text_Updater {
             'Alt Text Updater',
             'Alt Text Updater',
             'manage_options',
-            'alt-text-from-title-text-main',
+            'alt-text-updater',
             array($this, 'admin_page')
         );
     }
