@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Alt Text from Title Updater
- * Plugin URI: https://example.com/alt-text-from-title-text-main
+ * Plugin URI: https://github.com/cBanksBlueCanopy/alt-text-from-title-text
  * Description: Updates missing alt text with title text for all media library images
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Chris Banks
  * Author URI: https://example.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
