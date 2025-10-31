@@ -3,8 +3,8 @@
 /**
  * Plugin Name: Alt Text Updater
  * Plugin URI: https://github.com/cBanksBlueCanopy/alt-text-from-title-text
- * Description: Updates missing alt text with title text for all media library images
- * Version: 1.0.0
+ * Description: Updates missing alt text with title text if exists, or the filename for all media library images
+ * Version: 1.1.0
  * Author: Chris Banks
  * Author URI: https://example.com
  * License: GPL v2 or later
