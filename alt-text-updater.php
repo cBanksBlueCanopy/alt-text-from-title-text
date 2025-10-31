@@ -17,18 +17,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Alt_Text_Updater
-{
+class Alt_Text_Updater {
 
-    public function __construct()
-    {
+    public function __construct() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_ajax_update_alt_texts', array($this, 'ajax_update_alt_texts'));
     }
 
-    public function add_admin_menu()
-    {
+    public function add_admin_menu() {
         add_media_page(
             'Alt Text Updater',
             'Alt Text Updater',
@@ -38,8 +35,7 @@ class Alt_Text_Updater
         );
     }
 
-    public function enqueue_scripts($hook)
-    {
+    public function enqueue_scripts($hook) {
         if ($hook !== 'media_page_alt-text-updater') {
             return;
         }
@@ -63,9 +59,8 @@ class Alt_Text_Updater
         ));
     }
 
-    public function admin_page()
-    {
-?>
+    public function admin_page() {
+    ?>
         <div class="wrap">
             <h1>Alt Text Updater</h1>
             <div class="alt-text-updater-container">
@@ -74,9 +69,22 @@ class Alt_Text_Updater
                     <p>This tool will scan your media library and update any images that have:</p>
                     <ul>
                         <li>Missing or empty alt text</li>
-                        <li>A title text present</li>
                     </ul>
-                    <p>The alt text will be set to match the title text.</p>
+
+                    <p><strong>How it works:</strong></p>
+                    <ul>
+                        <li>If a title text is present, the alt text will be set to match the title text</li>
+                        <li>If no title text exists, both the title and alt text will be generated from the filename</li>
+                    </ul>
+
+                    <p><strong>Filename formatting:</strong> The plugin intelligently formats filenames by replacing underscores and hyphens with spaces, adding spaces before capital letters, and applying proper title case.</p>
+
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li><code>my-beach-photo.jpg</code> → "My Beach Photo"</li>
+                        <li><code>ProductImage_Final.png</code> → "Product Image Final"</li>
+                        <li><code>SummerVacation2024.jpg</code> → "Summer Vacation 2024"</li>
+                    </ul>
 
                     <button id="start-update" class="button button-primary button-large">
                         Start Update
