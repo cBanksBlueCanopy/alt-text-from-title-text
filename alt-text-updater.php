@@ -138,7 +138,7 @@ class Alt_Text_Updater {
 
         // Trim and capitalize first letter of each word
         $text = trim($text);
-        $text = ucwords(strtolower($text));
+        $text = ucfirst(strtolower($text));
 
         return $text;
     }
