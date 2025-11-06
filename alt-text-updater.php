@@ -4,7 +4,7 @@
  * Plugin Name: Alt Text Updater
  * Plugin URI: https://github.com/cBanksBlueCanopy/alt-text-from-title-text
  * Description: Updates missing alt text with title text if exists, or the filename for all media library images
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Chris Banks
  * Author URI: https://example.com
  * License: GPL v2 or later
@@ -75,6 +75,7 @@ class Alt_Text_Updater {
                     <ul>
                         <li>If a title text is present, the alt text will be set to match the title text</li>
                         <li>If no title text exists, both the title and alt text will be generated from the filename</li>
+                        <li>Alt text is applied to the parent image and automatically applies to all generated sizes (thumbnail, medium, large, etc.)</li>
                     </ul>
 
                     <p><strong>Filename formatting:</strong> The plugin intelligently formats filenames by replacing underscores and hyphens with spaces, adding spaces before capital letters, and applying proper title case.</p>
@@ -143,6 +144,48 @@ class Alt_Text_Updater {
         return $text;
     }
 
+    /**
+     * Get all image sizes for an attachment
+     * 
+     * @param int $attachment_id The attachment ID
+     * @return array Array of available image sizes
+     */
+    private function get_image_sizes_for_attachment($attachment_id) {
+        $metadata = wp_get_attachment_metadata($attachment_id);
+        $sizes = array('full'); // Always include full size
+
+        if (isset($metadata['sizes']) && is_array($metadata['sizes'])) {
+            $sizes = array_merge($sizes, array_keys($metadata['sizes']));
+        }
+
+        return $sizes;
+    }
+
+    /**
+     * Verify that image metadata is properly set
+     * 
+     * @param int $attachment_id The attachment ID
+     * @return bool Whether metadata exists
+     */
+    private function verify_image_metadata($attachment_id) {
+        $metadata = wp_get_attachment_metadata($attachment_id);
+        
+        // If metadata doesn't exist or is corrupted, try to regenerate it
+        if (empty($metadata) || !is_array($metadata)) {
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
+            $file_path = get_attached_file($attachment_id);
+            
+            if ($file_path && file_exists($file_path)) {
+                $metadata = wp_generate_attachment_metadata($attachment_id, $file_path);
+                wp_update_attachment_metadata($attachment_id, $metadata);
+                return !empty($metadata);
+            }
+            return false;
+        }
+
+        return true;
+    }
+
     public function ajax_update_alt_texts() {
         check_ajax_referer('alt_text_updater_nonce', 'nonce');
 
@@ -162,8 +205,15 @@ class Alt_Text_Updater {
         $updated_count = 0;
         $skipped_count = 0;
         $total_count = count($attachments);
+        $total_sizes_processed = 0;
+        $metadata_issues = 0;
 
         foreach ($attachments as $attachment_id) {
+            // Verify and regenerate metadata if needed
+            if (!$this->verify_image_metadata($attachment_id)) {
+                $metadata_issues++;
+            }
+
             $current_alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
             $title = get_the_title($attachment_id);
 
@@ -182,7 +232,13 @@ class Alt_Text_Updater {
 
             // If alt text is empty and title exists
             if (empty($current_alt) && !empty($title)) {
+                // Update alt text - this applies to all image sizes automatically
                 update_post_meta($attachment_id, '_wp_attachment_image_alt', sanitize_text_field($title));
+                
+                // Get count of image sizes for this attachment
+                $image_sizes = $this->get_image_sizes_for_attachment($attachment_id);
+                $total_sizes_processed += count($image_sizes);
+                
                 $updated_count++;
             } else {
                 $skipped_count++;
@@ -192,7 +248,9 @@ class Alt_Text_Updater {
         wp_send_json_success(array(
             'total' => $total_count,
             'updated' => $updated_count,
-            'skipped' => $skipped_count
+            'skipped' => $skipped_count,
+            'total_sizes' => $total_sizes_processed,
+            'metadata_issues' => $metadata_issues
         ));
     }
 }
