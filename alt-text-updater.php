@@ -230,10 +230,37 @@ class Alt_Text_Updater {
                 }
             }
 
+            //Check for invalid characters within the title.
+            if (!empty($title) && str_contains($title, '-')) {
+                $title = sanitize_text_field($title);
+                $finalTitleText = str_replace(array('-', '_'), ' ', $title);
+
+                if (!empty($title)) {
+                    wp_update_post(array(
+                        'ID' => $attachment_id,
+                        'post_title' => $finalTitleText
+                    ));
+
+                    $updated_count++;
+                }
+            }
+
+
+            //Check for invalid characters within the alt text
+            if (!empty($current_alt) && str_contains($current_alt, '-')) {
+                $alt = sanitize_text_field($current_alt);
+                $finalAltText = str_replace(array('-', '_'), ' ', $alt);
+                update_post_meta($attachment_id, '_wp_attachment_image_alt', $finalAltText);
+                $updated_count++;
+            }
+
+
             // If alt text is empty and title exists
             if (empty($current_alt) && !empty($title)) {
                 // Update alt text - this applies to all image sizes automatically
-                update_post_meta($attachment_id, '_wp_attachment_image_alt', sanitize_text_field($title));
+                $altText = sanitize_text_field($title);
+                $finalAltText = str_replace(array('-', '_'), ' ', $altText);
+                update_post_meta($attachment_id, '_wp_attachment_image_alt', $finalAltText);
                 
                 // Get count of image sizes for this attachment
                 $image_sizes = $this->get_image_sizes_for_attachment($attachment_id);
